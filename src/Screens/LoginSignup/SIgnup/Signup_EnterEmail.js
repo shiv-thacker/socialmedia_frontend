@@ -1,7 +1,16 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
-import {containerFull, goback} from '../../../Commoncss/pagecss';
+import {containerFull, goback, logo1} from '../../../Commoncss/pagecss';
 import Icon from 'react-native-vector-icons/AntDesign';
+import logo from '../../../../assets/logo.png';
+import {formHead2, formInput, formbtn} from '../../../Commoncss/formcss';
 
 const Signup_EnterEmail = ({navigation}) => {
   return (
@@ -9,7 +18,10 @@ const Signup_EnterEmail = ({navigation}) => {
       <TouchableOpacity
         onPress={() => navigation.navigate('Login')}
         style={goback}>
-        <Icon name="UpOutlined" color="grey" size={30} />
+        <Image
+          source={require('../../../../assets/back.png')}
+          style={{width: '18%', height: '100%'}}
+        />
         <Text
           style={{
             color: 'gray',
@@ -20,6 +32,15 @@ const Signup_EnterEmail = ({navigation}) => {
           Go Back
         </Text>
       </TouchableOpacity>
+
+      <Image source={logo} style={logo1} />
+      <Text style={formHead2}> Create New Account</Text>
+      <TextInput placeholder="Enter Your Email" style={formInput} />
+      <Text
+        style={formbtn}
+        onPress={() => navigation.navigate('Signup_EnterVerificationCode')}>
+        Next
+      </Text>
     </View>
   );
 };

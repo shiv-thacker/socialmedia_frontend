@@ -39,13 +39,13 @@ module.exports = {
     fontSize: 16,
   },
 
-  fontHead2: {
+  formHead2: {
     fontSize: 20,
     color: 'white',
     textAlign: 'center',
   },
   formHead3: {
-    foontSize: 20,
+    fontSize: 20,
     color: 'grey',
     textAlign: 'center',
     fontWeight: '400',

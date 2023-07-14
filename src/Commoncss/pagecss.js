@@ -8,6 +8,11 @@ module.exports = {
   },
 
   logo1: {
+    height: 140,
+    resizeMode: 'contain',
+    marginBottom: 20,
+  },
+  logo2: {
     height: 70,
     resizeMode: 'contain',
     marginBottom: 20,
@@ -26,8 +31,13 @@ module.exports = {
   goback: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 50,
+    top: 40,
     left: 20,
     alignItems: 'center',
+  },
+  icon1: {
+    width: 35,
+    height: 35,
+    borderColor: 'white',
   },
 };
