@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {icon1, logo2} from '../Commoncss/pagecss';
 
-const TopNavbar = () => {
+const TopNavbar = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
@@ -12,7 +12,9 @@ const TopNavbar = () => {
           {width: 40, borderColor: 'white', borderWidth: 3, aspectRatio: 1},
         ]}
       />
-      <Image source={require('../../assets/message.png')} style={icon1} />
+      <TouchableOpacity onPress={() => navigation.navigate('All_Chats')}>
+        <Image source={require('../../assets/message.png')} style={icon1} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingVertical: 10,
+    paddingHorizontal: 10,
     position: 'absolute',
     top: 0,
     zIndex: 100,

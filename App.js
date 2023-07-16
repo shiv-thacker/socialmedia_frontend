@@ -13,6 +13,7 @@ import ForgotPassword_EnterVerificationCode from './src/Screens/LoginSignup/Forg
 import ForgotPassword_ChoosePassword from './src/Screens/LoginSignup/Forgotpassword/ForgotPassword_ChoosePassword';
 import ForgotPassword_AccountRecovered from './src/Screens/LoginSignup/Forgotpassword/ForgotPassword_AccountRecovered';
 import MainPage from './src/Screens/Mainpage/Mainpage';
+import All_Chats from './src/Screens/ChatSection/All_Chats';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +65,11 @@ const App = () => {
           component={ForgotPassword_AccountRecovered}
         />
         <Stack.Screen name="MainPage" component={MainPage} />
+        <Stack.Screen
+          name="All_Chats"
+          component={All_Chats}
+          options={{animation: 'slide_from_bottom'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

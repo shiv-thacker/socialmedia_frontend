@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    zIndex: 100,
+    zIndex: 100, //Zindex used for show bottomnav everytime
     borderTopWidth: 1,
-    paddingVertical: 10, //Zindex used for show bottomnav everytime
+    paddingVertical: 10,
   },
 });
