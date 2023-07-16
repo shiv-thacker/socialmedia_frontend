@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import {goback, icon1} from '../../Commoncss/pagecss';
 import {formHead2} from '../../Commoncss/formcss';
-import ChatCard from '../../Components/ChatCard';
+import ChatCard from '../../Cards/ChatCard';
 
 const All_Chats = ({navigation}) => {
   let chats = [

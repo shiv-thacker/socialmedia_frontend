@@ -1,14 +1,61 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {icon1} from '../Commoncss/pagecss';
 
-const Bottomnavbar = () => {
+const Bottomnavbar = ({navigation, page}) => {
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/home.png')} style={icon1} />
-      <Image source={require('../../assets/heart.png')} style={icon1} />
-      <Image source={require('../../assets/search.png')} style={icon1} />
-      <Image source={require('../../assets/user.png')} style={icon1} />
+      {page === 'MainPage' ? (
+        <TouchableOpacity onPress={() => navigation.navigate('MainPage')}>
+          <Image
+            source={require('../../assets/home.png')}
+            style={styles.activeicon1}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate('MainPage')}>
+          <Image source={require('../../assets/home.png')} style={icon1} />
+        </TouchableOpacity>
+      )}
+      {page === 'SearchuserPage' ? (
+        <TouchableOpacity onPress={() => navigation.navigate('SearchUserPage')}>
+          <Image
+            source={require('../../assets/search.png')}
+            style={styles.activeicon1}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate('SearchUserPage')}>
+          <Image source={require('../../assets/search.png')} style={icon1} />
+        </TouchableOpacity>
+      )}
+      {page === 'NotificationPage' ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('NotificationPage')}>
+          <Image
+            source={require('../../assets/heart.png')}
+            style={styles.activeicon1}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('NotificationPage')}>
+          <Image source={require('../../assets/heart.png')} style={icon1} />
+        </TouchableOpacity>
+      )}
+
+      {page === 'My_userProfile' ? (
+        <TouchableOpacity onPress={() => navigation.navigate('My_userProfile')}>
+          <Image
+            source={require('../../assets/user.png')}
+            style={styles.activeicon1}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate('My_userProfile')}>
+          <Image source={require('../../assets/user.png')} style={icon1} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -29,5 +76,14 @@ const styles = StyleSheet.create({
     zIndex: 100, //Zindex used for show bottomnav everytime
     borderTopWidth: 1,
     paddingVertical: 10,
+    alignItems: 'center',
+  },
+  activeicon1: {
+    backgroundColor: 'grey',
+    borderRadius: 12,
+    padding: 10,
+    width: 30,
+    height: 30,
+    alignSelf: 'center',
   },
 });
