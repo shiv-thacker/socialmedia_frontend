@@ -12,7 +12,20 @@ const NotificationPage = ({navigation}) => {
       <StatusBar />
       <TopNavbar navigation={navigation} />
       <Bottomnavbar navigation={navigation} page={'NotificationPage'} />
-      <Text style={formHead}>Notification</Text>
+      <View style={styles.c1}>
+        <View style={styles.notification}>
+          <Text>Some Notification</Text>
+        </View>
+        <View style={styles.notification}>
+          <Text>Some Notification</Text>
+        </View>
+        <View style={styles.notification}>
+          <Text>Some Notification</Text>
+        </View>
+        <View style={styles.notification}>
+          <Text>Some Notification</Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -25,5 +38,16 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'black',
     paddingVertical: 60,
+  },
+  notification: {
+    width: '98%',
+    height: 50,
+    backgroundColor: '#111111',
+    marginTop: 20,
+  },
+  c1: {
+    weight: '100%',
+    height: '100%',
+    alignItems: 'center',
   },
 });

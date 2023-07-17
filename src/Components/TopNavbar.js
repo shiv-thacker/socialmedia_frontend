@@ -14,6 +14,12 @@ const TopNavbar = ({navigation, page}) => {
           <Image source={require('../../assets/message.png')} style={icon1} />
         </TouchableOpacity>
       )}
+
+      {page === 'My_userProfile' && (
+        <TouchableOpacity onPress={() => navigation.navigate('Settings1')}>
+          <Image source={require('../../assets/heart.png')} style={icon1} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
