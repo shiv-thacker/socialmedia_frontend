@@ -17,7 +17,7 @@ const Login = () => {
     <View style={containerFull}>
       <Image source={logo} style={logo1} />
       <Text style={formHead}>Login</Text>
-      <TextInput placeholder="Enter Your Emial" style={formInput} />
+      <TextInput placeholder="Enter Your Email" style={formInput} />
       <TextInput
         placeholder="Enter Your Password"
         style={formInput}
