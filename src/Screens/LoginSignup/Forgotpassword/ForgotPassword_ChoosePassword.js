@@ -1,4 +1,6 @@
 import {
+  Alert,
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
@@ -6,12 +8,49 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {containerFull, goback, logo1} from '../../../Commoncss/pagecss';
 import logo from '../../../../assets/logo.png';
 import {formHead2, formInput, formbtn} from '../../../Commoncss/formcss';
 
-const ForgotPassword_ChoosePassword = ({navigation}) => {
+const ForgotPassword_ChoosePassword = ({navigation, route}) => {
+  const {email} = route.params;
+
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setconfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const handlesetpassword = () => {
+    if (!password || !confirmpassword) {
+      Alert.alert('please fill all details');
+    } else if (password != confirmpassword) {
+      Alert.alert('Your password is not matching');
+    } else {
+      setLoading(true);
+      fetch('http://192.168.0.106:8000/resetpassword', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }), //to send in string format
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message == 'Password change successfully') {
+            setLoading(false);
+            Alert.alert(data.message);
+            navigation.navigate('ForgotPassword_AccountRecovered');
+          } else {
+            setLoading(false);
+            Alert.alert('please try again');
+          }
+        })
+        .catch(err => {
+          setLoading(false);
+          Alert.alert('catch err : ', err);
+        });
+    }
+  };
   return (
     <View style={containerFull}>
       <TouchableOpacity
@@ -38,17 +77,21 @@ const ForgotPassword_ChoosePassword = ({navigation}) => {
         placeholder="Enter password"
         style={formInput}
         secureTextEntry
+        onChangeText={text => setPassword(text)}
       />
       <TextInput
         placeholder="Confirm password"
         style={formInput}
         secureTextEntry
+        onChangeText={text => setconfirmPassword(text)}
       />
-      <Text
-        style={formbtn}
-        onPress={() => navigation.navigate('ForgotPassword_AccountRecovered')}>
-        Next
-      </Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="white" />
+      ) : (
+        <Text style={formbtn} onPress={() => handlesetpassword()}>
+          Next
+        </Text>
+      )}
     </View>
   );
 };

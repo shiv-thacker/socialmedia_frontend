@@ -26,6 +26,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{animation: 'slide_from_right', headerShown: false}}>
+        <Stack.Screen name="MainPage" component={MainPage} />
         <Stack.Screen
           name="Login"
           component={Login}
@@ -68,7 +69,7 @@ const App = () => {
           name="ForgotPassword_AccountRecovered"
           component={ForgotPassword_AccountRecovered}
         />
-        <Stack.Screen name="MainPage" component={MainPage} />
+
         <Stack.Screen
           name="All_Chats"
           component={All_Chats}

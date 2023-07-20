@@ -18,6 +18,9 @@ const Settings1 = ({navigation}) => {
       <Text style={styles.txt1}>Edit Profile</Text>
       <Text style={styles.txt1}>Change Password</Text>
       <Text style={styles.txt1}>Customer Support</Text>
+      <Text style={styles.txt1} onPress={() => navigation.navigate('Login')}>
+        Logout
+      </Text>
     </View>
   );
 };
