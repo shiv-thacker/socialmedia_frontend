@@ -3,16 +3,11 @@ import React from 'react';
 import {formHead} from '../../Commoncss/formcss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Settings1 = ({navigation}) => {
-  const logout = () => {
-    AsyncStorage.removeItem('user').then(() => {
-      navigation.navigate('Login');
-    });
-  };
+const EditProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('My_userProfile')}
+        onPress={() => navigation.navigate('Settings1')}
         style={styles.gohomeicon}>
         <Image
           source={require('../../../assets/back.png')}
@@ -20,26 +15,14 @@ const Settings1 = ({navigation}) => {
           resizeMode="cover"
         />
       </TouchableOpacity>
-      <Text style={formHead}>Settings</Text>
-      <Text
-        style={styles.txt1}
-        onPress={() => navigation.navigate('EditProfile')}>
-        Edit Profile
-      </Text>
-      <Text
-        style={styles.txt1}
-        onPress={() => navigation.navigate('ChangePassword')}>
-        Change Password
-      </Text>
-      <Text style={styles.txt1}>Customer Support</Text>
-      <Text style={styles.txt1} onPress={() => logout()}>
-        Logout
-      </Text>
+      <Text style={formHead}>Edit Profile</Text>
+      <Text style={styles.txt1}>Change Username</Text>
+      <Text style={styles.txt1}>Change Description</Text>
     </View>
   );
 };
 
-export default Settings1;
+export default EditProfile;
 
 const styles = StyleSheet.create({
   container: {

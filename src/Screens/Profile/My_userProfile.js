@@ -6,6 +6,7 @@ import {
   Text,
   View,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {containerFull} from '../../Commoncss/pagecss';
@@ -22,11 +23,14 @@ const My_userProfile = ({navigation}) => {
   useEffect(() => {
     AsyncStorage.getItem('user')
       .then(async value => {
-        //console.log('async user data', data);
+        // console.log('async user data', data);
         // setUserdata(JSON.parse(data));
         fetch('http://192.168.0.106:8000/userdata', {
-          method: 'post',
-          headers: {'Content-Type': 'application/json'},
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + JSON.parse(value).token,
+          },
           body: JSON.stringify({
             email: JSON.parse(value).user.email,
           }),
@@ -36,51 +40,50 @@ const My_userProfile = ({navigation}) => {
             if (data.message == 'User found') {
               setUserdata(data.user);
             } else {
-              Alert.alert('SOmething went wrong');
+              Alert.alert('SOmething went wrong, Login again');
               navigation.navigate('Login');
             }
           })
           .catch(err => navigation.navigate('Login'));
       })
-      .catch(err => navigation.navigate('Login'));
+      .catch(err => console.log(err));
   }, []);
-
   console.log('userdata', userdata);
-  const data = {
-    username: 'shivang123',
-    followers: 1100,
-    following: 1500,
-    description: 'I am a software developer and i love to code',
-    profile_imge:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_EpYaHHcu2fUaXML2N0AcOf89x2eS66IRr3BMh5EJfVkEy3M4&s',
-    posts: [
-      {
-        id: 1,
-        post_image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-      },
-      {
-        id: 2,
-        post_image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-      },
-      {
-        id: 3,
-        post_image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-      },
-      {
-        id: 4,
-        post_image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-      },
-      {
-        id: 5,
-        post_image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-      },
-    ],
-  };
+  // const data = {
+  //   username: 'shivang123',
+  //   followers: 1100,
+  //   following: 1500,
+  //   description: 'I am a software developer and i love to code',
+  //   profile_imge:
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_EpYaHHcu2fUaXML2N0AcOf89x2eS66IRr3BMh5EJfVkEy3M4&s',
+  //   posts: [
+  //     {
+  //       id: 1,
+  //       post_image:
+  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
+  //     },
+  //     {
+  //       id: 2,
+  //       post_image:
+  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
+  //     },
+  //     {
+  //       id: 3,
+  //       post_image:
+  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
+  //     },
+  //     {
+  //       id: 4,
+  //       post_image:
+  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
+  //     },
+  //     {
+  //       id: 5,
+  //       post_image:
+  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
+  //     },
+  //   ],
+  // };
   // console.log(data.posts);
   return (
     <View style={styles.container}>
