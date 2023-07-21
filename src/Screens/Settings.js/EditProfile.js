@@ -15,10 +15,11 @@ const EditProfile = ({navigation}) => {
           resizeMode="cover"
         />
       </TouchableOpacity>
+      <Text style={formHead}>Edit Profile</Text>
       <Text
-        style={formHead}
+        style={styles.txt1}
         onPress={() => navigation.navigate('UploadProfilePicture')}>
-        Edit Profile
+        Change ProfilePic
       </Text>
       <Text
         style={styles.txt1}

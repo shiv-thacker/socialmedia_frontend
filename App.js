@@ -22,7 +22,7 @@ import ChangePassword from './src/Screens/Settings.js/ChangePassword';
 import EditProfile from './src/Screens/Settings.js/EditProfile';
 import ChangeUsername from './src/Screens/Settings.js/ChangeUsername';
 import ChangeDescription from './src/Screens/Settings.js/ChangeDescription';
-//import UploadProfilePicture from './src/Screens/Settings.js/UploadProfilePicture';
+import UploadProfilePicture from './src/Screens/Settings.js/UploadProfilePicture';
 
 const Stack = createNativeStackNavigator();
 
@@ -97,10 +97,10 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="ChangeUsername" component={ChangeUsername} />
         <Stack.Screen name="ChangeDescription" component={ChangeDescription} />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="UploadProfilePicture"
           component={UploadProfilePicture}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
