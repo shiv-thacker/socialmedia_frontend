@@ -18,7 +18,7 @@ import {utils} from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 
 const UploadProfilePicture = ({navigation}) => {
-  const [imageData, setImagedata] = useState('');
+  const [imageData, setImagedata] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setloading] = useState(false);
   const [isNewImageSelected, setIsNewImageSelected] = useState(false);
@@ -57,20 +57,25 @@ const UploadProfilePicture = ({navigation}) => {
       height: 400,
       cropping: true,
     }).then(async image => {
+      console.log(image);
       setImagedata(image.path);
       setIsNewImageSelected(true);
     });
   };
 
   const generateurl = async () => {
-    // create bucket storage reference to not yet existing image
-    const reference = storage().ref(imageData);
-    await reference.putFile(imageData);
-
-    //for grnerate download link
-    const url = await reference.getDownloadURL();
-    console.log(url);
-    setIsNewImageSelected(false);
+    if (imageData == null) {
+      return null;
+      Alert.alert('user has not selected any image');
+    } else {
+      // create bucket storage reference to not yet existing image
+      const reference = storage().ref(imageData);
+      await reference.putFile(imageData);
+      //for grnerate download link
+      const url = await reference.getDownloadURL();
+      console.log(url);
+      setIsNewImageSelected(false);
+    }
   };
 
   return (
