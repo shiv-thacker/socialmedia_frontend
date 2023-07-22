@@ -132,12 +132,12 @@ const My_userProfile = ({navigation}) => {
             <View style={styles.c1}>
               <Text style={styles.txt}>Your post</Text>
               <View style={styles.c13}>
-                {data.posts.map((item, index) => {
+                {userdata.posts.map((item, index) => {
                   return (
                     <Image
-                      key={item.id}
+                      key={item.post}
                       style={styles.postpic}
-                      source={{uri: item.post_image}}
+                      source={{uri: item.post}}
                     />
                   );
                 })}

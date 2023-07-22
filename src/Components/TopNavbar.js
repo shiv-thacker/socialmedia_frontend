@@ -5,6 +5,11 @@ import {icon1, logo2} from '../Commoncss/pagecss';
 const TopNavbar = ({navigation, page}) => {
   return (
     <View style={styles.container}>
+      <Text
+        style={styles.addpost}
+        onPress={() => navigation.navigate('AddPost')}>
+        ADD POST
+      </Text>
       <Image
         source={require('../../assets/logo.png')}
         style={[logo2, {width: 30, aspectRatio: 1}]}
@@ -38,5 +43,9 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 100,
     backgroundColor: '#111111',
+  },
+  addpost: {
+    color: 'white',
+    fontSize: 15,
   },
 });
