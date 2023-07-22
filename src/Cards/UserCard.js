@@ -1,16 +1,26 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
+import nopic from '../../assets/user.png';
 
-const UserCard = ({user}) => {
+const UserCard = ({user, navigation}) => {
   return (
-    <View style={styles.chatcard}>
-      <Image source={{uri: user.profile_image}} style={styles.image} />
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Other_profile', {user: user});
+      }}>
+      <View style={styles.chatcard}>
+        {user.profilepic ? (
+          <Image source={{uri: user.profilepic}} style={styles.image} />
+        ) : (
+          <Image source={nopic} style={styles.image} />
+        )}
 
-      <View style={styles.c1}>
-        <Text style={styles.username}>{user.username}</Text>
-        <Text style={styles.lastmessage}>{user.lastmessage}</Text>
+        <View style={styles.c1}>
+          <Text style={styles.username}>{user.username}</Text>
+          <Text style={styles.lastmessage}>{user.lastmessage}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

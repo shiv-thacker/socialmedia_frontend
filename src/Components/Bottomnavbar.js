@@ -17,7 +17,7 @@ const Bottomnavbar = ({navigation, page}) => {
           <Image source={require('../../assets/home.png')} style={icon1} />
         </TouchableOpacity>
       )}
-      {page === 'SearchuserPage' ? (
+      {page === 'SearchUserPage' ? (
         <TouchableOpacity onPress={() => navigation.navigate('SearchUserPage')}>
           <Image
             source={require('../../assets/search.png')}
