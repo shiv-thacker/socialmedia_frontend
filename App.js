@@ -31,6 +31,10 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{animation: 'slide_from_right', headerShown: false}}>
+        <Stack.Screen
+          name="UploadProfilePicture"
+          component={UploadProfilePicture}
+        />
         <Stack.Screen name="MainPage" component={MainPage} />
         <Stack.Screen
           name="Login"
@@ -97,10 +101,6 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="ChangeUsername" component={ChangeUsername} />
         <Stack.Screen name="ChangeDescription" component={ChangeDescription} />
-        <Stack.Screen
-          name="UploadProfilePicture"
-          component={UploadProfilePicture}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
