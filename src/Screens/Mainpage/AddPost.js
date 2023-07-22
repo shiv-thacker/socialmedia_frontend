@@ -81,7 +81,7 @@ const AddPost = ({navigation}) => {
                 setloading2(false);
                 navigation.navigate('My_userProfile');
               } else {
-                Alert.alert('Something went wrong, please try again');
+                Alert.alert(data.error);
                 setloading2(false);
               }
             })
