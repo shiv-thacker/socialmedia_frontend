@@ -19,8 +19,7 @@ import nopic from '../../../assets/user.png';
 
 const My_userProfile = ({navigation}) => {
   const [userdata, setUserdata] = useState(null);
-
-  useEffect(() => {
+  const loadata = async () => {
     AsyncStorage.getItem('user')
       .then(async value => {
         // console.log('async user data', data);
@@ -47,6 +46,9 @@ const My_userProfile = ({navigation}) => {
           .catch(err => navigation.navigate('Login'));
       })
       .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    loadata();
   }, []);
   console.log('userdata', userdata);
   // const data = {
@@ -90,6 +92,9 @@ const My_userProfile = ({navigation}) => {
       <StatusBar />
       <TopNavbar navigation={navigation} page={'My_userProfile'} />
       <Bottomnavbar navigation={navigation} page={'My_userProfile'} />
+      <Text style={styles.refresh} onPress={() => loadata()}>
+        REFRESH
+      </Text>
 
       {userdata ? (
         <ScrollView>
@@ -97,7 +102,7 @@ const My_userProfile = ({navigation}) => {
             {userdata.profilepic.length > 0 ? (
               <Image
                 style={styles.profile_pic}
-                source={{uri: data.userdata.profilepic}}
+                source={{uri: userdata.profilepic}}
               />
             ) : (
               <Image style={styles.profile_pic} source={nopic} />
@@ -228,5 +233,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 200,
+  },
+  refresh: {
+    position: 'absolute',
+    top: 80,
+    right: 10,
+    zIndex: 1,
+    color: 'white',
+    fontSize: 15,
   },
 });
