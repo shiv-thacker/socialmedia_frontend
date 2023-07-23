@@ -20,8 +20,6 @@ import nopic from '../../../assets/user.png';
 const Other_profile = ({navigation, route}) => {
   const [userdata, setUserdata] = useState(null);
   const {user} = route.params;
-  console.log(user);
-  console.log(user);
   const loadata = async () => {
     fetch('http://192.168.0.106:8000/otheruserdata', {
       method: 'POST',
@@ -32,6 +30,8 @@ const Other_profile = ({navigation, route}) => {
       .then(data => {
         if (data.message == 'User found') {
           setUserdata(data.user);
+          ismyprofile(data.user);
+          CheckFollow(data.user);
         } else {
           Alert.alert('User not Found');
           navigation.navigate('SearchUserPage');
@@ -45,43 +45,60 @@ const Other_profile = ({navigation, route}) => {
   useEffect(() => {
     loadata();
   }, []);
-  console.log('userdata', userdata);
-  // const data = {
-  //   username: 'shivang123',
-  //   followers: 1100,
-  //   following: 1500,
-  //   description: 'I am a software developer and i love to code',
-  //   profile_imge:
-  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_EpYaHHcu2fUaXML2N0AcOf89x2eS66IRr3BMh5EJfVkEy3M4&s',
-  //   posts: [
-  //     {
-  //       id: 1,
-  //       post_image:
-  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-  //     },
-  //     {
-  //       id: 2,
-  //       post_image:
-  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-  //     },
-  //     {
-  //       id: 3,
-  //       post_image:
-  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-  //     },
-  //     {
-  //       id: 4,
-  //       post_image:
-  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-  //     },
-  //     {
-  //       id: 5,
-  //       post_image:
-  //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPa10hhWbcRmKjub3g5pRIj7gaaOMExq_XMfY1zCiuxbrDpA&s',
-  //     },
-  //   ],
-  // };
-  // console.log(data.posts);
+
+  //check my profile
+  const [issameuser, setIssameuser] = useState(false);
+  const ismyprofile = async otherprofile => {
+    AsyncStorage.getItem('user').then(loggeduser => {
+      const loggeduserobj = JSON.parse(loggeduser);
+      // console.log('logged user', loggeduserobj);
+      // console.log('other user', otherprofile);
+      if (loggeduserobj.user.email == otherprofile.email) {
+        setIssameuser(true);
+        console.log('same user');
+      } //convert string data to object
+      else {
+        setIssameuser(false);
+        console.log('not same user');
+      }
+    });
+  };
+
+  //Check follow or unfollow
+  const [isfollowing, setIsfollowing] = useState();
+
+  const CheckFollow = otherprofile => {
+    AsyncStorage.getItem('user')
+      .then(loggeduser => {
+        const loggeduserobj = JSON.parse(loggeduser);
+
+        fetch('http://192.168.0.106:8000/checkfollower', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            followfrom: loggeduserobj.user.email,
+            followto: otherprofile.email,
+          }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.message == 'User in following list') {
+              setIsfollowing(true);
+            } else if (data.message == 'User not in following list') {
+              setIsfollowing(false);
+            } else {
+              Alert.alert(data.error);
+            }
+          });
+      })
+      .catch(err => Alert.alert('async failed'));
+  };
+
+  // const CheckFollow
+  //Folllow this user
+
+  //Unfollow this user
+
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -104,10 +121,16 @@ const Other_profile = ({navigation, route}) => {
             )}
             <Text style={styles.txt}> @{userdata.username}</Text>
 
-            <View style={styles.row}>
-              <Text style={styles.follow}>Follow</Text>
-              <Text style={styles.message}>Message</Text>
-            </View>
+            {!issameuser && (
+              <View style={styles.row}>
+                {isfollowing ? (
+                  <Text style={styles.follow}>Following</Text>
+                ) : (
+                  <Text style={styles.follow}>not Following</Text>
+                )}
+                <Text style={styles.message}>Message</Text>
+              </View>
+            )}
             <View style={styles.c11}>
               <View style={styles.c111}>
                 <Text style={styles.txt1}>Followers</Text>
@@ -130,7 +153,7 @@ const Other_profile = ({navigation, route}) => {
           </View>
           {userdata.posts.length > 0 ? (
             <View style={styles.c1}>
-              <Text style={styles.txt}>Your post</Text>
+              <Text style={styles.txt}>post</Text>
               <View style={styles.c13}>
                 {userdata.posts.map((item, index) => {
                   return (

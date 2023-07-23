@@ -12,7 +12,7 @@ const MainPage = ({navigation}) => {
   useEffect(() => {
     AsyncStorage.getItem('user')
       .then(data => {
-        //console.log('async user data', data);
+        console.log('async user data', data);
         setUserdata(JSON.parse(data));
       })
       .catch(err => Alert.alert(err));

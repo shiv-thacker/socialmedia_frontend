@@ -22,7 +22,7 @@ const My_userProfile = ({navigation}) => {
   const loadata = async () => {
     AsyncStorage.getItem('user')
       .then(async value => {
-        // console.log('async user data', data);
+        console.log('async user data', value);
         // setUserdata(JSON.parse(data));
         fetch('http://192.168.0.106:8000/userdata', {
           method: 'POST',
