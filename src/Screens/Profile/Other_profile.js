@@ -84,8 +84,10 @@ const Other_profile = ({navigation, route}) => {
           .then(data => {
             if (data.message == 'User in following list') {
               setIsfollowing(true);
+              console.log('you are following each other');
             } else if (data.message == 'User not in following list') {
               setIsfollowing(false);
+              console.log('you are not following each other');
             } else {
               Alert.alert(data.error);
             }
@@ -94,10 +96,65 @@ const Other_profile = ({navigation, route}) => {
       .catch(err => Alert.alert('async failed'));
   };
 
-  // const CheckFollow
   //Folllow this user
+  const followThisUser = async otherprofile => {
+    console.log('follow this user', otherprofile);
+    const loggeduser = await AsyncStorage.getItem('user');
+    const loggeduserobj = JSON.parse(loggeduser);
 
+    fetch('http://192.168.0.106:8000/followuser', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        followfrom: loggeduserobj.user.email,
+        followto: otherprofile.email,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message == 'User Following') {
+          Alert.alert('Following');
+          setIsfollowing(true);
+          loadata();
+        } else if (
+          data.message == "other user's profile says: you are already following"
+        ) {
+          Alert.alert("You are already in user's follower list");
+        } else {
+          Alert.alert(data.error);
+        }
+      })
+      .catch(err => Alert.alert('not fetching data'));
+  };
   //Unfollow this user
+
+  const unfollowThisUser = async otherprofile => {
+    console.log('follow this user', otherprofile);
+    const loggeduser = await AsyncStorage.getItem('user');
+    const loggeduserobj = JSON.parse(loggeduser);
+
+    fetch('http://192.168.0.106:8000/unfollowuser', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        followfrom: loggeduserobj.user.email,
+        followto: otherprofile.email,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message == 'Now You are Unfollowing') {
+          Alert.alert('Unfollowed');
+          setIsfollowing(false);
+          loadata();
+        } else if (data.message == "You are not in it's follower's profile") {
+          Alert.alert("You are not in it's follower's profile");
+        } else {
+          Alert.alert(data.error);
+        }
+      })
+      .catch(err => Alert.alert('not fetching data'));
+  };
 
   return (
     <View style={styles.container}>
@@ -124,9 +181,17 @@ const Other_profile = ({navigation, route}) => {
             {!issameuser && (
               <View style={styles.row}>
                 {isfollowing ? (
-                  <Text style={styles.follow}>Following</Text>
+                  <Text
+                    style={styles.follow}
+                    onPress={() => unfollowThisUser(userdata)}>
+                    Following
+                  </Text>
                 ) : (
-                  <Text style={styles.follow}>not Following</Text>
+                  <Text
+                    style={styles.follow}
+                    onPress={() => followThisUser(userdata)}>
+                    not Following
+                  </Text>
                 )}
                 <Text style={styles.message}>Message</Text>
               </View>
