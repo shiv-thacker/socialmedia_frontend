@@ -184,13 +184,13 @@ const Other_profile = ({navigation, route}) => {
                   <Text
                     style={styles.follow}
                     onPress={() => unfollowThisUser(userdata)}>
-                    Following
+                    Unfollow
                   </Text>
                 ) : (
                   <Text
                     style={styles.follow}
                     onPress={() => followThisUser(userdata)}>
-                    not Following
+                    Follow
                   </Text>
                 )}
                 <Text style={styles.message}>Message</Text>
@@ -216,24 +216,32 @@ const Other_profile = ({navigation, route}) => {
               <Text style={styles.description}>{userdata.description}</Text>
             )}
           </View>
-          {userdata.posts.length > 0 ? (
-            <View style={styles.c1}>
-              <Text style={styles.txt}>post</Text>
-              <View style={styles.c13}>
-                {userdata.posts.map((item, index) => {
-                  return (
-                    <Image
-                      key={item.post}
-                      style={styles.postpic}
-                      source={{uri: item.post}}
-                    />
-                  );
-                })}
-              </View>
-            </View>
+          {isfollowing || issameuser ? (
+            <>
+              {userdata.posts.length > 0 ? (
+                <View style={styles.c1}>
+                  <Text style={styles.txt}>post</Text>
+                  <View style={styles.c13}>
+                    {userdata.posts.map((item, index) => {
+                      return (
+                        <Image
+                          key={item.post}
+                          style={styles.postpic}
+                          source={{uri: item.post}}
+                        />
+                      );
+                    })}
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.c2}>
+                  <Text style={styles.txt1}>User has Not Posted Anything</Text>
+                </View>
+              )}
+            </>
           ) : (
             <View style={styles.c2}>
-              <Text style={styles.txt1}>You Have Not Posted Anything</Text>
+              <Text style={styles.txt1}>Follow to see the post</Text>
             </View>
           )}
         </ScrollView>
