@@ -193,7 +193,15 @@ const Other_profile = ({navigation, route}) => {
                     Follow
                   </Text>
                 )}
-                <Text style={styles.message}>Message</Text>
+                <Text
+                  style={styles.message}
+                  onPress={() =>
+                    navigation.navigate('Messagepage', {
+                      fuseremail: userdata.email,
+                    })
+                  }>
+                  Message
+                </Text>
               </View>
             )}
             <View style={styles.c11}>

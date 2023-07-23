@@ -25,6 +25,7 @@ import ChangeDescription from './src/Screens/Settings.js/ChangeDescription';
 import UploadProfilePicture from './src/Screens/Settings.js/UploadProfilePicture';
 import AddPost from './src/Screens/Mainpage/AddPost';
 import Other_profile from './src/Screens/Profile/Other_profile';
+import Messagepage from './src/Screens/ChatSection/Messagepage';
 
 const Stack = createNativeStackNavigator();
 
@@ -105,6 +106,7 @@ const App = () => {
         />
         <Stack.Screen name="AddPost" component={AddPost} />
         <Stack.Screen name="Other_profile" component={Other_profile} />
+        <Stack.Screen name="Messagepage" component={Messagepage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
