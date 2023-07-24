@@ -12,6 +12,10 @@ const MainPage = ({navigation}) => {
   useEffect(() => {
     AsyncStorage.getItem('user')
       .then(data => {
+        const dataobj = JSON.parse(data);
+        if (dataobj.token == '') {
+          navigation.navigate('Login');
+        }
         console.log('async user data', data);
         setUserdata(JSON.parse(data));
       })

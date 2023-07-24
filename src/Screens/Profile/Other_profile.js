@@ -198,6 +198,7 @@ const Other_profile = ({navigation, route}) => {
                   onPress={() =>
                     navigation.navigate('Messagepage', {
                       fuseremail: userdata.email,
+                      fuserid: userdata._id,
                     })
                   }>
                   Message
