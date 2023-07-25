@@ -136,7 +136,7 @@ const Messagepage = ({navigation, route}) => {
         }
       })
       .catch(err => {
-        Alert.alert('Error in server side');
+        Alert.alert('Error in server sidee');
       });
   };
 
