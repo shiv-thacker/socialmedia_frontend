@@ -69,6 +69,7 @@ const AddPost = ({navigation}) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
               email: JSON.parse(data).user.email,
+              username: JSON.parse(data).user.username,
               postdescription: postdescription,
               post: post,
             }),

@@ -72,21 +72,25 @@ const Messagepage = ({navigation, route}) => {
               })
                 .then(res => res.json())
                 .then(async data1 => {
-                  if (data1.message == 'User found') {
-                    setFuserdata(data1.user);
-                    let temproomid = await sortroomid(fuserid, data.user._id);
-                    setRoomid(temproomid);
-                    console.log('temproom', temproomid);
+                  try {
+                    if (data1.message == 'User found') {
+                      setFuserdata(data1.user);
+                      let temproomid = await sortroomid(fuserid, data.user._id);
+                      setRoomid(temproomid);
+                      console.log('temproom', temproomid);
 
-                    //socket.emmit is used to fire from frontend and go to backend
+                      //socket.emmit is used to fire from frontend and go to backend
 
-                    socket.emit('join_room', {roomid: temproomid});
+                      socket.emit('join_room', {roomid: temproomid});
 
-                    //load message shows past chats
-                    loadMessages(temproomid);
-                  } else {
-                    Alert.alert('User not Found');
-                    navigation.navigate('SearchUserPage');
+                      //load message shows past chats
+                      loadMessages(temproomid);
+                    } else {
+                      Alert.alert('User not Found');
+                      navigation.navigate('SearchUserPage');
+                    }
+                  } catch (err) {
+                    Alert.alert('can not call catch');
                   }
                 })
                 .catch(err => {
@@ -136,11 +140,11 @@ const Messagepage = ({navigation, route}) => {
         }
       })
       .catch(err => {
-        Alert.alert('Error in server sidee');
+        Alert.alert('Error in server side');
       });
   };
 
-  const loadMessages = async () => {
+  const loadMessages = async roomid => {
     fetch('http://192.168.0.106:8000/getmessages', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -251,10 +255,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#111111',
     padding: 10,
     marginVertical: 5,
+    height: '8%',
+    zIndex: 1,
   },
   sbottom: {
     width: '100%',
-    height: 50,
+    height: '8%',
     backgroundColor: '#111111',
     flexDirection: 'row',
     alignItems: 'center',
@@ -275,7 +281,8 @@ const styles = StyleSheet.create({
   },
   messageView: {
     width: '100%',
-    borderRadius: 50,
+    bottom: 60,
+    backgroundColor: 'red',
   },
   messageright: {
     width: '100%',

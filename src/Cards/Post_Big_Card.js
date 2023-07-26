@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {icon1} from '../Commoncss/pagecss';
+import nopic from '../../assets/user.png';
 
 const Post_Big_Card = ({
   username,
@@ -26,7 +27,12 @@ const Post_Big_Card = ({
         <Image source={{uri: profile_image}} style={styles.profilepic}></Image>
         <Text style={styles.username}>{username}</Text>
       </View>
-      <Image source={{uri: post_image}} style={styles.image} />
+      {post_image.length > 0 ? (
+        <Image source={{uri: post_image}} style={styles.image} />
+      ) : (
+        <Image source={nopic} style={styles.image} />
+      )}
+
       <View style={styles.s2}>
         {isliked ? (
           <View style={styles.s21}>
