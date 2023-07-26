@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
 import Post_Big_Card from '../Cards/Post_Big_Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Followers_RandomPost = () => {
+const Followers_RandomPost = ({navigation}) => {
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
 
@@ -32,7 +32,7 @@ const Followers_RandomPost = () => {
           .then(data1 => {
             console.log('code is reaching after response generated');
             if (data1.message === 'got the post') {
-              console.log('post details', data1);
+              //console.log('post details', data1);
               setloading(false);
               setData(data1);
               Alert.alert('data fetched');
@@ -44,13 +44,14 @@ const Followers_RandomPost = () => {
           .catch(err => {
             setloading(false);
             console.log('error is ', err);
-            Alert.alert(`response is not comming : ${err}`);
+            Alert.alert(`response is not comming `);
           });
       })
 
       .catch(err => {
         setloading(false);
         Alert.alert('error async storag');
+        navigation.navigate('Login');
       });
   };
 
@@ -145,6 +146,7 @@ const Followers_RandomPost = () => {
                   post_image={item.post}
                   likes={item.likes}
                   comments={item.comments}
+                  postowneremail={item.email}
                 />
               ))
             ) : (

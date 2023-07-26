@@ -19,17 +19,17 @@ const MainPage = ({navigation}) => {
         console.log('async user data', data);
         setUserdata(JSON.parse(data));
       })
-      .catch(err => Alert.alert(err));
+      .catch(err => Alert.alert('error in get data from async'));
   }, []);
 
-  console.log('userdata', userdata);
+  // console.log('userdata', userdata);
 
   return (
     <View style={styles.container}>
       <StatusBar />
       <TopNavbar navigation={navigation} page={'MainPage'} />
       <Bottomnavbar navigation={navigation} page={'MainPage'} />
-      <Followers_RandomPost />
+      <Followers_RandomPost navigation={navigation} />
     </View>
   );
 };

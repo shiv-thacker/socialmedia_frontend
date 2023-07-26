@@ -160,7 +160,7 @@ const Messagepage = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.s1}>
-        <TouchableOpacity onPress={() => navigation.navigate('All_Chats')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Other_profile')}>
           <Image
             source={require('../../../assets/back.png')}
             style={{
@@ -169,7 +169,7 @@ const Messagepage = ({navigation, route}) => {
               resizeMode: 'contain',
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* If data is loading in useEffect, & in useEffect you are providing setFuserdata(data), and same time if you want to render fuserdata, you should user,  */}
         {fuserdata?.profilepic ? (
@@ -282,7 +282,6 @@ const styles = StyleSheet.create({
   messageView: {
     width: '100%',
     bottom: 60,
-    backgroundColor: 'red',
   },
   messageright: {
     width: '100%',

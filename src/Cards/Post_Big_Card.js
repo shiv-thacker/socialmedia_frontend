@@ -5,10 +5,12 @@ import {
   View,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {icon1} from '../Commoncss/pagecss';
 import nopic from '../../assets/user.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Post_Big_Card = ({
   username,
@@ -16,11 +18,113 @@ const Post_Big_Card = ({
   post_image,
   likes,
   comments,
+  postowneremail,
 }) => {
   // console.log(post_image, profile_image, username, likes, comments);
-  console.log(comments);
+
   const [isliked, setisliked] = useState(false);
   const [showcomments, setShowcomments] = useState(false);
+  const [likeslength, setLikeslength] = useState(likes.length);
+
+  useEffect(() => {
+    loaddata();
+  }, []);
+
+  const loaddata = () => {
+    AsyncStorage.getItem('user')
+      .then(value => {
+        fetch('http://192.168.0.106:8000/likecheck', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            likerEmail: JSON.parse(value).user.email,
+            postOwnerEmail: postowneremail,
+            postPhotoLink: post_image,
+          }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.message == 'User has liked this') {
+              setisliked(true);
+            } else if (data.message == 'User has not liked this') {
+              setisliked(false);
+            } else {
+              Alert.alert(` not getting messages of data`);
+            }
+          })
+          .catch(err => {
+            Alert.alert(`error is : ${err}`);
+          });
+      })
+      .catch(err => {
+        Alert.alert(`async ${err}`);
+      });
+  };
+  const like = () => {
+    AsyncStorage.getItem('user')
+      .then(value => {
+        fetch('http://192.168.0.106:8000/like', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            likerEmail: JSON.parse(value).user.email,
+            postOwnerEmail: postowneremail,
+            postPhotoLink: post_image,
+          }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.message == 'User has liked this') {
+              setLikeslength(data.likes.length);
+              setisliked(true);
+              loaddata();
+            } else if (data.message == 'User has already liked this') {
+              Alert.alert('You have already liked this');
+            } else {
+              Alert.alert(` not getting messages of data`);
+            }
+          })
+          .catch(err => {
+            Alert.alert(`error is : ${err}`);
+          });
+      })
+      .catch(err => {
+        Alert.alert(`async ${err}`);
+      });
+  };
+  const dislike = () => {
+    AsyncStorage.getItem('user')
+      .then(value => {
+        fetch('http://192.168.0.106:8000/dislike', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            likerEmail: JSON.parse(value).user.email,
+            postOwnerEmail: postowneremail,
+            postPhotoLink: post_image,
+          }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.message == 'User has disliked this') {
+              setLikeslength(data.likes.length);
+              setisliked(false);
+              loaddata();
+            } else if (data.message == 'User has already disliked this') {
+              Alert.alert('You have already disliked this');
+            } else {
+              Alert.alert(` not getting messages of data`);
+            }
+          })
+          .catch(err => {
+            Alert.alert(`error is : ${err}`);
+          });
+      })
+      .catch(err => {
+        Alert.alert(`async ${err}`);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.c1}>
@@ -38,24 +142,24 @@ const Post_Big_Card = ({
           <View style={styles.s21}>
             <TouchableOpacity
               onPress={() => {
-                setisliked(!isliked);
+                dislike();
               }}>
               <Image
                 source={require('../../assets/heart_selected.png')}
                 style={icon1}
               />
             </TouchableOpacity>
-            <Text style={styles.liked}>{likes.length + 1}</Text>
+            <Text style={styles.liked}>{likeslength}</Text>
           </View>
         ) : (
           <View style={styles.s21}>
             <TouchableOpacity
               onPress={() => {
-                setisliked(!isliked);
+                like();
               }}>
               <Image source={require('../../assets/heart.png')} style={icon1} />
             </TouchableOpacity>
-            <Text style={styles.notliked}>{likes.length}</Text>
+            <Text style={styles.notliked}>{likeslength}</Text>
           </View>
         )}
         <View style={styles.s22}>
